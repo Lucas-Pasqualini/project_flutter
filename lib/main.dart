@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/screen/got/list.dart';
-// import 'package:projet_flutter/screen/sign_in/sign_in.dart';
-
+import 'package:projet_flutter/screen/sign_in/sign_in.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const SignIn(),
-      home: const ListScreen(),
+      home: const SignIn(),
     );
   }
 }

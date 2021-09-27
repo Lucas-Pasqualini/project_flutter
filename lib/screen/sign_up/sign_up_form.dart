@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:projet_flutter/screen/got/list.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm(
@@ -151,8 +152,8 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                     );
                     if (_formKey.currentState!.validate()) {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const LoganWidget()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ListScreen()));
                     }
                   }),
             ),

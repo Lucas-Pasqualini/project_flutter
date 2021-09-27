@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter/screen/got/list.dart';
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key, required this.heightArg, required this.widthArg, required this.padding})
+  const SignInForm(
+      {Key? key,
+      required this.heightArg,
+      required this.widthArg,
+      required this.padding})
       : super(key: key);
 
   final double heightArg;
@@ -103,8 +108,8 @@ class _SignInFormState extends State<SignInForm> {
                           content: Text('Processing Data')),
                     );
                     if (_formKey.currentState!.validate()) {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const LoganWidget()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ListScreen()));
                     }
                   }),
             ),
