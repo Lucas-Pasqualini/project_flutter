@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/screen/got/list.dart';
+import 'package:projet_flutter/screen/got/list_got_api.dart';
+import 'package:projet_flutter/service/authentication.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm(
@@ -20,6 +21,8 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class _SignInFormState extends State<SignInForm> {
               width: width * widget.widthArg,
               height: height * widget.heightArg,
               child: TextFormField(
+                controller: emailController,
                 validator: (value) {
                   if (value == null || value.trim() == "" || value.isEmpty) {
                     return 'Please enter your email';
@@ -57,6 +61,7 @@ class _SignInFormState extends State<SignInForm> {
               width: width * widget.widthArg,
               height: height * widget.heightArg,
               child: TextFormField(
+                controller: passwordController,
                 validator: (value) {
                   if (value == null || value.trim() == "" || value.isEmpty) {
                     return 'Please enter your password';
@@ -101,15 +106,32 @@ class _SignInFormState extends State<SignInForm> {
                     "Log In",
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          duration: Duration(seconds: 1),
-                          content: Text('Processing Data')),
-                    );
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ListScreen()));
+                      // await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      //     email: emailController.text,
+                      //     password: passwordController.text);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const ListGotApi()));
+                      AuthenticationHelper()
+                          .signIn(
+                              email: emailController.text,
+                              password: passwordController.text)
+                          .then((result) {
+                        if (result == null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ListGotApi()));
+                        } else {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              result,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ));
+                        }
+                      });
                     }
                   }),
             ),

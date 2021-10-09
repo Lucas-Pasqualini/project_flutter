@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/screen/got/list.dart';
+import 'package:projet_flutter/screen/got/list_got_api.dart';
+import 'package:projet_flutter/service/authentication.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm(
@@ -23,6 +24,9 @@ class _SignUpFormState extends State<SignUpForm> {
   bool passwordBool = true;
   bool confirmPasswordBool = true;
   String password = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
             width: width * widget.widthArg,
             height: height * widget.heightArg,
             child: TextFormField(
+              controller: emailController,
               validator: (value) {
                 if (value == null || value.trim() == "" || value.isEmpty) {
                   return 'Please enter email';
@@ -59,6 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
               height: height * widget.heightArg,
               width: width * widget.widthArg,
               child: TextFormField(
+                controller: passwordController,
                 validator: (value) {
                   if (value == null || value.trim() == "" || value.isEmpty) {
                     return 'Please enter password';
@@ -98,6 +104,7 @@ class _SignUpFormState extends State<SignUpForm> {
               height: height * widget.heightArg,
               width: width * widget.widthArg,
               child: TextFormField(
+                controller: confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.trim() == "" || value.isEmpty) {
                     return 'Please enter password';
@@ -144,16 +151,27 @@ class _SignUpFormState extends State<SignUpForm> {
                     "Register",
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Processing Data'),
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ListScreen()));
+                      AuthenticationHelper()
+                          .signUp(
+                              email: emailController.text,
+                              password: passwordController.text)
+                          .then((result) {
+                        if (result == null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ListGotApi()));
+                        } else {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              result,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ));
+                        }
+                      });
                     }
                   }),
             ),

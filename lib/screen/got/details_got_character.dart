@@ -2,8 +2,8 @@ import 'package:projet_flutter/model/character.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Details extends StatefulWidget {
-  const Details({
+class DetailsGotCharacter extends StatefulWidget {
+  const DetailsGotCharacter({
     Key? key,
     required this.character,
   }) : super(key: key);
@@ -12,10 +12,10 @@ class Details extends StatefulWidget {
   final Character character;
 
   @override
-  DetailsState createState() => DetailsState();
+  DetailsGotCharacterState createState() => DetailsGotCharacterState();
 }
 
-class DetailsState extends State<Details> {
+class DetailsGotCharacterState extends State<DetailsGotCharacter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
