@@ -28,4 +28,8 @@ class AuthenticationHelper {
   Future signOut() async {
     await _auth.signOut();
   }
+
+  getUid() {
+    return user.uid;
+  }
 }

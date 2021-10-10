@@ -37,9 +37,13 @@ class _ListGotApiState extends State<ListGotApi> {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(_characters[index].fullName),
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(_characters[index].imageUrl),
-                radius: 30,
+              leading: Hero(
+                tag: _characters[index],
+                child: CircleAvatar(
+                  backgroundImage: 
+                  NetworkImage(_characters[index].imageUrl),
+                  radius: 30,
+                ),
               ),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
