@@ -35,22 +35,7 @@ class _ListGotApiState extends State<ListGotApi> {
               const Divider(),
           itemCount: _characters.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(_characters[index].fullName),
-              leading: Hero(
-                tag: _characters[index],
-                child: CircleAvatar(
-                  backgroundImage: 
-                  NetworkImage(_characters[index].imageUrl),
-                  radius: 30,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        DetailsGotCharacter(character: _characters[index])));
-              },
-            );
+            return displayName("", index);
           });
     } else {
       return const Center(child: CircularProgressIndicator());
@@ -67,5 +52,42 @@ class _ListGotApiState extends State<ListGotApi> {
       ),
       body: _getBuddy(),
     );
+  }
+
+  Widget displayName(String name, int index) {
+    if (name == _characters[index].fullName) {
+      return ListTile(
+        title: Text(_characters[index].fullName),
+        leading: Hero(
+          tag: _characters[index],
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(_characters[index].imageUrl),
+            radius: 30,
+          ),
+        ),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  DetailsGotCharacter(character: _characters[index])));
+        },
+      );
+    } else {
+      return Row(children: [
+        Hero(
+          tag: _characters[index],
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(_characters[index].imageUrl),
+            radius: 30,
+          ),
+        ),
+        const TextField(),
+        // TextButton(
+        //   child: const Text("test"),
+        //   onPressed: () {
+        //     if (true) {}
+        //   },
+        // )
+      ]);
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:projet_flutter/model/character.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projet_flutter/service/storage.dart';
+import 'package:simple_star_rating/simple_star_rating.dart';
 import '../rating.dart';
 
 class DetailsGotCharacter extends StatefulWidget {
@@ -32,8 +33,8 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
           title: const Text("Opinion"),
           centerTitle: true,
         ),
-        body: Scrollbar(
-          child: Center(
+        body: Center(
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -118,21 +119,24 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
 
   Widget _getOpinion() {
     if (_opinions.isNotEmpty) {
-      return Expanded(
-        child: ListView.separated(
+        return ListView.separated(
+          shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(),
             itemCount: _opinions.length,
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(_opinions[index]["opinion"]),
-                leading: const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
+                leading: SimpleStarRating(
+                  allowHalfRating: true,
+                  starCount: 5,
+                  rating: _opinions[index]["rating"],
+                  size: 20,
+                  isReadOnly: true,
+                  spacing: 2,
+                )
               );
-            }),
-      );
+            });
     } else {
       return const Center(child: Text("No opinion for this character"));
     }
