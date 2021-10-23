@@ -4,6 +4,10 @@ import 'package:projet_flutter/service/authentication.dart';
 class StorageHelper {
   CollectionReference opinions =
       FirebaseFirestore.instance.collection('opinion');
+
+  CollectionReference game =
+  FirebaseFirestore.instance.collection('game');
+
   var uid = AuthenticationHelper().getUid();
 
   void saveOpinion({opinion, rating, character}) {
@@ -28,5 +32,27 @@ class StorageHelper {
                 {res.add(document.data())}
             });
     return res;
+  }
+
+  Future<List> getGame() async {
+    var res = [];
+    await game
+        .where("uid", isEqualTo: uid)
+        .get()
+        .then((querySnapshot) => {
+      for (var document in querySnapshot.docs)
+        {res.add(document.data())}
+    });
+    return res;
+  }
+
+  void saveGame({character}) {
+    game
+        .add({
+      "uid": uid,
+      "character": character,
+    })
+        .then((value) => print("Game Added"))
+        .catchError((error) => print("Failed to add game: $error"));
   }
 }

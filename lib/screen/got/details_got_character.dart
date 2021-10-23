@@ -33,8 +33,8 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
           title: const Text("Opinion"),
           centerTitle: true,
         ),
-        body: Center(
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
