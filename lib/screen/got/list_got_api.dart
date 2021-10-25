@@ -61,8 +61,43 @@ class _ListGotApiState extends State<ListGotApi> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("Game of thrones"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(icon: const Icon(Icons.help_outline_outlined), onPressed: () {
+              _showMyDialog();
+            },),
+          )
+        ],
       ),
       body: _getBuddy(),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Rules of the game'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text("To print an opinion, you must to find the correct character's name"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Play'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
