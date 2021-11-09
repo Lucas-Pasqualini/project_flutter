@@ -16,7 +16,7 @@ class _ListGotApiState extends State<ListGotApi> {
   List<Character> _characters = [];
   late double width;
   final List<TextEditingController> _controllers = [];
-  late List _game;
+  List _game = List.empty();
 
   Future<void> getAllCharacters() async {
     var uri = Uri.parse('https://thronesapi.com/api/v2/Characters');
