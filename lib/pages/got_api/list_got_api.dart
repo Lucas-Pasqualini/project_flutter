@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:projet_flutter/model/character.dart';
+import 'package:projet_flutter/data/models/character.dart';
 import 'details_got_character.dart';
-import 'package:projet_flutter/service/storage.dart';
+import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
+import 'got_bloc.dart';
 
 class ListGotApi extends StatefulWidget {
   const ListGotApi({Key? key}) : super(key: key);
@@ -19,17 +18,10 @@ class _ListGotApiState extends State<ListGotApi> {
   List _game = List.empty();
 
   Future<void> getAllCharacters() async {
-    var uri = Uri.parse('https://thronesapi.com/api/v2/Characters');
-
-    var responseFromApi = await http.get(uri);
-    if (responseFromApi.statusCode == 200) {
-      setState(() {
-        List jsonResponse = jsonDecode(responseFromApi.body);
-        _characters = jsonResponse
-            .map((character) => Character.fromJson(character))
-            .toList();
-      });
-    }
+    var characterList = await apiBloc.getCharacters();
+    setState(() {
+      _characters = characterList;
+    });
   }
 
   Widget _getBuddy() {

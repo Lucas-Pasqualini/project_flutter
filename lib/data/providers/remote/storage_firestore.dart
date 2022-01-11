@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projet_flutter/service/authentication.dart';
+import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
 
 class StorageHelper {
   CollectionReference opinions =

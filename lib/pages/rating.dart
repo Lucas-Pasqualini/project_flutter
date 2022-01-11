@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:projet_flutter/service/storage.dart';
+import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 
 class Rating extends StatefulWidget {
   const Rating({Key? key, required this.name, }) : super(key: key);

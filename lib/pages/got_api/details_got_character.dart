@@ -1,7 +1,7 @@
-import 'package:projet_flutter/model/character.dart';
+import 'package:projet_flutter/data/models/character.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:projet_flutter/service/storage.dart';
+import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 import '../rating.dart';
 
@@ -119,13 +119,13 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
 
   Widget _getOpinion() {
     if (_opinions.isNotEmpty) {
-        return ListView.separated(
+      return ListView.separated(
           shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-            itemCount: _opinions.length,
-            itemBuilder: (context, index) {
-              return ListTile(
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemCount: _opinions.length,
+          itemBuilder: (context, index) {
+            return ListTile(
                 title: Text(_opinions[index]["opinion"]),
                 leading: SimpleStarRating(
                   allowHalfRating: true,
@@ -134,9 +134,8 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
                   size: 20,
                   isReadOnly: true,
                   spacing: 2,
-                )
-              );
-            });
+                ));
+          });
     } else {
       return const Center(child: Text("No opinion for this character"));
     }

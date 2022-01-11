@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:projet_flutter/screen/sign_up/web/sign_up_web.dart';
-
+import 'package:projet_flutter/pages/sign_up/web/sign_up_web.dart';
 import 'mobile/sign_up_mobile.dart';
 
 class SignUp extends StatefulWidget {

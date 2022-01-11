@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/screen/got/list_got_api.dart';
-import 'package:projet_flutter/service/authentication.dart';
+import 'package:projet_flutter/pages/got_api/list_got_api.dart';
+import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm(
