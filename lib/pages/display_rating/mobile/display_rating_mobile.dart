@@ -3,8 +3,8 @@ import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 
-class Rating extends StatefulWidget {
-  const Rating({Key? key, required this.name, }) : super(key: key);
+class DisplayRatingMobile extends StatefulWidget {
+  const DisplayRatingMobile({Key? key, required this.name, }) : super(key: key);
 
   final String name;
 
@@ -12,13 +12,17 @@ class Rating extends StatefulWidget {
   _RatingState createState() => _RatingState();
 }
 
-class _RatingState extends State<Rating> {
+class _RatingState extends State<DisplayRatingMobile> {
   AddToCartButtonStateId stateId = AddToCartButtonStateId.idle;
   TextEditingController opinionController = TextEditingController();
   double ratingController = 0.0;
+  late double width;
+  late double height;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Opinion"),
@@ -32,7 +36,7 @@ class _RatingState extends State<Rating> {
                 padding: EdgeInsets.only(top: 15),
                 child: Text("Rating",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               ),
               Padding(
                 padding: const EdgeInsets.all(15),
@@ -56,11 +60,11 @@ class _RatingState extends State<Rating> {
                 padding: EdgeInsets.all(15.0),
                 child: Text("Give your opinion : ",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               ),
               SizedBox(
-                width: 300,
-                height: 150,
+                width: width * 0.8,
+                height: height * 0.5,
                 child: TextFormField(
                   controller: opinionController,
                   keyboardType: TextInputType.multiline,
@@ -74,7 +78,7 @@ class _RatingState extends State<Rating> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+                padding: EdgeInsets.only(left: width * 0.2, right: width * 0.2, top: 10),
                 child: AddToCartButton(
                   trolley: Image.asset(
                     'assets/images/trone.png',

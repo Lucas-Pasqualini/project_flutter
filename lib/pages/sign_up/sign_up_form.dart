@@ -1,6 +1,8 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/pages/got_api/list_got_api.dart';
+import 'package:projet_flutter/pages/got_api/mobile/list_got_api_mobile.dart';
+import 'package:projet_flutter/pages/got_api/web/list_got_api_web.dart';
 import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -159,10 +161,18 @@ class _SignUpFormState extends State<SignUpForm> {
                               password: passwordController.text)
                           .then((result) {
                         if (result == null) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ListGotApi()));
+                          if (kIsWeb) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const ListGotApiWeb()));
+                          } else {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ListGotApiMobile()));
+                          }
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text(

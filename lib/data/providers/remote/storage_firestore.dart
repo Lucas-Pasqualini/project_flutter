@@ -18,8 +18,8 @@ class StorageHelper {
           "opinion": opinion,
           "rating": rating,
         })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+        .then((value) => print("Opinion Added"))
+        .catchError((error) => print("Failed to add opinion: $error"));
   }
 
   Future<List> getOpinion(character) async {

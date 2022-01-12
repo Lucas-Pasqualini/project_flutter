@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
-import '../rating.dart';
+import '../../display_rating/web/display_rating_web.dart';
 
-class DetailsGotCharacter extends StatefulWidget {
-  const DetailsGotCharacter({
+class DetailsGotCharacterWeb extends StatefulWidget {
+  const DetailsGotCharacterWeb({
     Key? key,
     required this.character,
   }) : super(key: key);
@@ -17,11 +17,15 @@ class DetailsGotCharacter extends StatefulWidget {
   DetailsGotCharacterState createState() => DetailsGotCharacterState();
 }
 
-class DetailsGotCharacterState extends State<DetailsGotCharacter> {
+class DetailsGotCharacterState extends State<DetailsGotCharacterWeb> {
   List _opinions = [];
+  late double height;
+  late double width;
 
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     StorageHelper().getOpinion(widget.character.fullName).then((value) => {
           setState(() {
             _opinions = value.toList();
@@ -42,9 +46,13 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
                     overflow: Overflow.visible,
                     alignment: Alignment.center,
                     children: [
-                      Image.network(
-                        "https://i1.wp.com/passionchateau.fr/wp-content/uploads/2014/07/3_w4q6s.jpg?resize=640%2C360",
-                        fit: BoxFit.cover,
+                      SizedBox(
+                        height: height * 0.5,
+                        width: double.infinity,
+                        child: Image.network(
+                          "https://www.wallpapertip.com/wmimgs/1-12470_game-of-thrones-wallpapers-game-of-thrones-sigils.jpg",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Positioned(
                         bottom: -75,
@@ -76,20 +84,26 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
-                ListTile(
-                  title: Text(widget.character.title),
-                  leading: Image.network(
-                    "https://cdn.iconscout.com/icon/premium/png-256-thumb/crown-3078851-2558867.png",
-                    width: 30,
-                    height: 30,
+                Padding(
+                  padding: EdgeInsets.only(left: width * 0.2),
+                  child: ListTile(
+                    title: Text(widget.character.title),
+                    leading: Image.network(
+                      "https://cdn.iconscout.com/icon/premium/png-256-thumb/crown-3078851-2558867.png",
+                      width: 30,
+                      height: 30,
+                    ),
                   ),
                 ),
-                ListTile(
-                    title: Text(widget.character.family),
-                    leading: const Icon(
-                      Icons.house,
-                      size: 30,
-                    )),
+                Padding(
+                  padding: EdgeInsets.only(left: width * 0.2),
+                  child: ListTile(
+                      title: Text(widget.character.family),
+                      leading: const Icon(
+                        Icons.house,
+                        size: 30,
+                      )),
+                ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -110,7 +124,7 @@ class DetailsGotCharacterState extends State<DetailsGotCharacter> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          Rating(name: widget.character.fullName)));
+                          DisplayRatingWeb(name: widget.character.fullName)));
                 },
                 child: const Icon(Icons.add),
               ),
