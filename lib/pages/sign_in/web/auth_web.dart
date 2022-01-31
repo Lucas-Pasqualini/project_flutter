@@ -22,18 +22,6 @@ class AuthWeb extends StatelessWidget {
       logo: AssetImage('assets/images/trone.png'),
       onLogin: AuthenticationHelper().signIn,
       onSignup: AuthenticationHelper().signUp,
-      loginProviders: <LoginProvider>[
-        LoginProvider(
-          icon: FontAwesomeIcons.google,
-          label: 'Google',
-          callback: () async {
-            debugPrint('start google sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop google sign in');
-            return null;
-          },
-        ),
-      ],
       onSubmitAnimationCompleted: () {
         if (kIsWeb) {
           Navigator.of(context).pushReplacement(

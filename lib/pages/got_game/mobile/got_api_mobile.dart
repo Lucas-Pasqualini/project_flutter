@@ -3,8 +3,7 @@ import 'package:projet_flutter/data/models/character.dart';
 import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
 import 'package:projet_flutter/pages/display_details_got/mobile/details_got_character_mobile.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
-import 'package:projet_flutter/pages/got_api%20copy/got_bloc.dart';
-import 'package:projet_flutter/pages/got_api%20copy/web/list_got_api_web.dart';
+import 'package:projet_flutter/pages/got_api/got_bloc.dart';
 import 'package:projet_flutter/pages/got_api/mobile/list_got_api_mobile.dart';
 import 'package:projet_flutter/pages/sign_in/web/auth_web.dart';
 
