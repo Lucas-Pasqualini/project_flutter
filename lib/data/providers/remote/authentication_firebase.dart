@@ -1,14 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login/flutter_login.dart';
 
 class AuthenticationHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   get user => _auth.currentUser;
 
-  Future signUp({required String email, required String password}) async {
+  Future<String?> signIn(LoginData data) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: data.name.toString(), password: data.password.toString());
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+
+  Future<String?> signUp(SignupData data) async {
     try {
       await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: data.name.toString(),
+        password: data.password.toString(),
       );
       return null;
     } on FirebaseAuthException catch (e) {
@@ -16,17 +26,17 @@ class AuthenticationHelper {
     }
   }
 
-  Future signIn({required String email, required String password}) async {
+  Future<String?> signOut() async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signOut();
       return null;
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
   }
 
-  Future signOut() async {
-    await _auth.signOut();
+  Future<String> recoverPassword(String name) async {
+    return "password recovering";
   }
 
   getUid() {

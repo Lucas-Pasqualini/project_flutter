@@ -43,6 +43,10 @@ dependencies:
   firebase_core: ^1.7.0
   firebase_storage: ^10.0.5
   cloud_firestore: ^2.5.3
+  flutter_login: ^3.1.0
+  font_awesome_flutter: ^9.2.0
+  google_sign_in: ^5.2.3
+  google_sign_in_web: ^0.10.0+4
 
   flutter_rating_bar: ^4.0.0
   flutter_add_to_cart_button: ^1.0.0+1
