@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projet_flutter/data/models/character.dart';
+import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
+import 'package:projet_flutter/pages/got_game/web/got_api_web.dart';
+import 'package:projet_flutter/pages/sign_in/web/auth_web.dart';
 import '../../display_details_got/web/details_got_character_web.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 import '../got_bloc.dart';
-import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
-import 'package:projet_flutter/pages/sign_in/web/auth_web.dart';
 
 class ListGotApiWeb extends StatefulWidget {
   const ListGotApiWeb({Key? key}) : super(key: key);
@@ -21,6 +22,12 @@ class _ListGotApiState extends State<ListGotApiWeb> {
 
   Future<void> getAllCharacters() async {
     var characterList = await apiBloc.getCharacters();
+    // var i = 0;
+    // for (i = 0; i < characterList.length - 1; i++) {
+    //   if (checkListGame(characterList[i].fullName)) {
+    //     characterList.removeAt(i);
+    //   }
+    // }
     setState(() {
       _characters = characterList;
     });
@@ -54,32 +61,30 @@ class _ListGotApiState extends State<ListGotApiWeb> {
     width = MediaQuery.of(context).size.width;
 
     getAllCharacters();
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("Game of thrones"),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(Icons.help_outline_outlined),
-              onPressed: () {
-                _showMyDialog();
-              },
-            )
-          ),
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: const Icon(Icons.quiz),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const GotApiWeb()));
+                },
+              )),
           Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AuthWeb()));
-                AuthenticationHelper().signOut();
-              },
-            )
-          ),
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const AuthWeb()));
+                  AuthenticationHelper().signOut();
+                },
+              )),
         ],
       ),
       body: _getBuddy(),
@@ -119,70 +124,25 @@ class _ListGotApiState extends State<ListGotApiWeb> {
   }
 
   Widget displayName(int index) {
-    if (_game.isNotEmpty && checkListGame(_characters[index].fullName)) {
-      return Center(
-        child: SizedBox(
-          width: width * 0.6,
-          child: ListTile(
-            title: Text(_characters[index].fullName),
-            leading: Hero(
-              tag: _characters[index],
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(_characters[index].imageUrl),
-                radius: 30,
-              ),
+    return Center(
+      child: SizedBox(
+        width: width * 0.6,
+        child: ListTile(
+          title: Text(_characters[index].fullName),
+          leading: Hero(
+            tag: _characters[index],
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(_characters[index].imageUrl),
+              radius: 30,
             ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsGotCharacterWeb(character: _characters[index])));
-            },
           ),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    DetailsGotCharacterWeb(character: _characters[index])));
+          },
         ),
-      );
-    } else {
-      return Center(
-        child: SizedBox(
-          width: width * 0.6,
-          child: Row(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 14),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(_characters[index].imageUrl),
-                radius: 30,
-              ),
-            ),
-            Container(
-                padding: const EdgeInsets.only(left: 20),
-                width: width * 0.5,
-                child: TextField(
-                  controller: _controllers[index],
-                )),
-            IconButton(
-                onPressed: () {
-                  if (_controllers[index]
-                          .text
-                          .compareTo(_characters[index].fullName) ==
-                      0) {
-                    StorageHelper()
-                        .saveGame(character: _characters[index].fullName);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DetailsGotCharacterWeb(
-                            character: _characters[index])));
-                  } else {
-                    _controllers[index].text = "";
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                        "Incorrect name",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ));
-                  }
-                },
-                icon: const Icon(Icons.check))
-          ]),
-        ),
-      );
-    }
+      ),
+    );
   }
 }
