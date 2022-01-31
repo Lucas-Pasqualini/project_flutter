@@ -4,14 +4,14 @@ import 'package:projet_flutter/pages/display_details_got/mobile/details_got_char
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 import '../got_bloc.dart';
 
-class GotApiWeb extends StatefulWidget {
-  const GotApiWeb({Key? key}) : super(key: key);
+class GotApiMobile extends StatefulWidget {
+  const GotApiMobile({Key? key}) : super(key: key);
 
   @override
   _ListGotApiState createState() => _ListGotApiState();
 }
 
-class _ListGotApiState extends State<GotApiWeb> {
+class _ListGotApiState extends State<GotApiMobile> {
   List<Character> _characters = [];
   late double width;
   final List<TextEditingController> _controllers = [];

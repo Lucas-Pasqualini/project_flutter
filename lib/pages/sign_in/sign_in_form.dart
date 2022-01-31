@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projet_flutter/pages/got_api/mobile/list_got_api_mobile.dart';
 import 'package:projet_flutter/pages/got_api/web/list_got_api_web.dart';
 import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
+import 'package:projet_flutter/pages/got_game/mobile/got_api_mobile.dart';
 import 'package:projet_flutter/pages/got_game/web/got_api_web.dart';
 
 class SignInForm extends StatefulWidget {
@@ -126,13 +127,13 @@ class _SignInFormState extends State<SignInForm> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const GotApiWeb()));
+                                    builder: (context) => const GotApiWeb()));
                           } else {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ListGotApiMobile()));
+                                    builder: (context) =>
+                                        const GotApiMobile()));
                           }
                         } else {
                           Scaffold.of(context).showSnackBar(SnackBar(

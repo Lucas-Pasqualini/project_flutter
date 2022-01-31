@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projet_flutter/data/models/character.dart';
-import '../../display_details_got/web/details_got_character_web.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
+import 'package:projet_flutter/pages/display_details_got/web/details_got_character_web.dart';
 import '../got_bloc.dart';
+import 'package:flutter/material.dart';
 
 class GotApiWeb extends StatefulWidget {
   const GotApiWeb({Key? key}) : super(key: key);
@@ -24,24 +25,6 @@ class _ListGotApiState extends State<GotApiWeb> {
     });
   }
 
-  Widget _getBuddy() {
-    if (_characters.isNotEmpty) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-            itemCount: _characters.length,
-            itemBuilder: (context, index) {
-              _controllers.add(TextEditingController());
-              return displayName(index);
-            }),
-      );
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     StorageHelper().getGame().then((value) => {
@@ -51,7 +34,7 @@ class _ListGotApiState extends State<GotApiWeb> {
         });
     width = MediaQuery.of(context).size.width;
 
-    getAllCharacters();
+    var _selectedIndex;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -69,6 +52,21 @@ class _ListGotApiState extends State<GotApiWeb> {
         ],
       ),
       body: _getBuddy(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.quiz),
+            label: 'Quiz',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
     );
   }
 
@@ -100,79 +98,69 @@ class _ListGotApiState extends State<GotApiWeb> {
     );
   }
 
-  bool checkListGame(String character) {
-    return _game.map((item) => item["character"] == character).contains(true);
+  _getBuddy() {
+    return Scaffold(
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.network(
+            "https://cdn.pixabay.com/photo/2017/02/21/21/13/unicorn-2087450_1280.png",
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget displayName(int index) {
-    if (_game.isNotEmpty && checkListGame(_characters[index].fullName)) {
-      return Center(
-        child: SizedBox(
-          width: width * 0.6,
-          child: ListTile(
-            title: Text(_characters[index].fullName),
-            leading: Hero(
-              tag: _characters[index],
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(_characters[index].imageUrl),
-                radius: 30,
-              ),
+    return Center(
+      child: SizedBox(
+        width: width * 0.6,
+        child: Row(children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(_characters[index].imageUrl),
+              radius: 30,
             ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsGotCharacterWeb(character: _characters[index])));
-            },
           ),
-        ),
-      );
-    } else {
-      return Center(
-        child: SizedBox(
-          width: width * 0.6,
-          child: Row(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 14),
-              // display image fill size in the center of the screen
-              child: Hero(
-                tag: _characters[index],
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(_characters[index].imageUrl),
-                  radius: 30,
-                ),
-              ),
-            ),
-            Container(
-                padding: const EdgeInsets.only(left: 20),
-                width: width * 0.5,
-                child: TextField(
-                  controller: _controllers[index],
-                )),
-            IconButton(
-                onPressed: () {
-                  if (_controllers[index]
-                          .text
-                          .compareTo(_characters[index].fullName) ==
-                      0) {
-                    StorageHelper()
-                        .saveGame(character: _characters[index].fullName);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DetailsGotCharacterWeb(
-                            character: _characters[index])));
-                  } else {
-                    _controllers[index].text = "";
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                        "Incorrect name",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ));
-                  }
-                },
-                icon: const Icon(Icons.check))
-          ]),
-        ),
-      );
-    }
+          Container(
+              padding: const EdgeInsets.only(left: 20),
+              width: width * 0.5,
+              child: TextField(
+                controller: _controllers[index],
+              )),
+          IconButton(
+              onPressed: () {
+                if (_controllers[index]
+                        .text
+                        .compareTo(_characters[index].fullName) ==
+                    0) {
+                  StorageHelper()
+                      .saveGame(character: _characters[index].fullName);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailsGotCharacterWeb(
+                          character: _characters[index])));
+                } else {
+                  _controllers[index].text = "";
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      "Incorrect name",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ));
+                }
+              },
+              icon: const Icon(Icons.check))
+        ]),
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
+  
