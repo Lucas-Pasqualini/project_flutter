@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:projet_flutter/pages/sign_up/sign_up.dart';
 import '../sign_in_form.dart';
@@ -68,4 +68,4 @@ class SignInMobile extends StatelessWidget {
       ),
     );
   }
-}
+}*/
