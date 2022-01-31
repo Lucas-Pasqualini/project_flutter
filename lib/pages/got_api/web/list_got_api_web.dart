@@ -54,24 +54,7 @@ class _ListGotApiState extends State<ListGotApiWeb> {
     width = MediaQuery.of(context).size.width;
 
     getAllCharacters();
-    /*return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Game of thrones"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(Icons.help_outline_outlined),
-              onPressed: () {
-                _showMyDialog();
-              },
-            ),
-          )
-        ],
-      ),
-      body: _getBuddy(),
-    );*/
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -91,20 +74,16 @@ class _ListGotApiState extends State<ListGotApiWeb> {
             child: IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AuthWeb()));
                 AuthenticationHelper().signOut();
-                //Navigator.of(context).push(MaterialPageRoute(
-                    //builder: (context) => const AuthWeb()));
               },
             )
-          )
+          ),
         ],
       ),
       body: _getBuddy(),
     );
-
-
-
-
   }
 
   Future<void> _showMyDialog() async {
