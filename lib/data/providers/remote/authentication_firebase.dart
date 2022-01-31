@@ -26,20 +26,15 @@ class AuthenticationHelper {
     }
   }
 
-  Future<String?> signOut() async {
-    try {
-      await _auth.signOut();
-      return null;
-    } on FirebaseAuthException catch (e) {
-      return e.message;
-    }
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 
-  Future<String> recoverPassword(String name) async {
+  Future<String?> recoverPassword(String name) async {
     return "password recovering";
   }
 
-  getUid() {
+  String getUid() {
     return user.uid;
   }
 }
