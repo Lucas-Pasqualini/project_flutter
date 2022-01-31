@@ -36,7 +36,7 @@ class AuthWeb extends StatelessWidget {
       ],
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => /*const ListGotApiWeb(),*/const MyStatefulWidget()
+          builder: (context) => const ListGotApiWeb()
         ));
       },
       onRecoverPassword: AuthenticationHelper().recoverPassword,

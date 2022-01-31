@@ -3,6 +3,8 @@ import 'package:projet_flutter/data/models/character.dart';
 import '../../display_details_got/web/details_got_character_web.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
 import '../got_bloc.dart';
+import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
+import 'package:projet_flutter/pages/sign_in/web/auth_web.dart';
 
 class ListGotApiWeb extends StatefulWidget {
   const ListGotApiWeb({Key? key}) : super(key: key);
@@ -52,7 +54,7 @@ class _ListGotApiState extends State<ListGotApiWeb> {
     width = MediaQuery.of(context).size.width;
 
     getAllCharacters();
-    return Scaffold(
+    /*return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("Game of thrones"),
@@ -69,7 +71,40 @@ class _ListGotApiState extends State<ListGotApiWeb> {
         ],
       ),
       body: _getBuddy(),
+    );*/
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("Game of thrones"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.help_outline_outlined),
+              onPressed: () {
+                _showMyDialog();
+              },
+            )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                AuthenticationHelper().signOut();
+                //Navigator.of(context).push(MaterialPageRoute(
+                    //builder: (context) => const AuthWeb()));
+              },
+            )
+          )
+        ],
+      ),
+      body: _getBuddy(),
     );
+
+
+
+
   }
 
   Future<void> _showMyDialog() async {
