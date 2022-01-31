@@ -3,19 +3,19 @@ import 'package:projet_flutter/data/models/character.dart';
 import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
 import 'package:projet_flutter/pages/display_details_got/mobile/details_got_character_mobile.dart';
 import 'package:projet_flutter/data/providers/remote/storage_firestore.dart';
-import 'package:projet_flutter/pages/got_game/mobile/got_api_mobile.dart';
-import 'package:projet_flutter/pages/got_game/web/got_api_web.dart';
+import 'package:projet_flutter/pages/got_api%20copy/got_bloc.dart';
+import 'package:projet_flutter/pages/got_api%20copy/web/list_got_api_web.dart';
+import 'package:projet_flutter/pages/got_api/mobile/list_got_api_mobile.dart';
 import 'package:projet_flutter/pages/sign_in/web/auth_web.dart';
-import '../got_bloc.dart';
 
-class ListGotApiMobile extends StatefulWidget {
-  const ListGotApiMobile({Key? key}) : super(key: key);
+class GotApiMobile extends StatefulWidget {
+  const GotApiMobile({Key? key}) : super(key: key);
 
   @override
   _ListGotApiState createState() => _ListGotApiState();
 }
 
-class _ListGotApiState extends State<ListGotApiMobile> {
+class _ListGotApiState extends State<GotApiMobile> {
   List<Character> _characters = [];
   late double width;
   final List<TextEditingController> _controllers = [];
@@ -62,12 +62,21 @@ class _ListGotApiState extends State<ListGotApiMobile> {
         title: const Text("Game of thrones"),
         actions: [
           Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.help_outline_outlined),
+              onPressed: () {
+                _showMyDialog();
+              },
+            ),
+          ),
+          Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
-                icon: const Icon(Icons.quiz),
+                icon: const Icon(Icons.home),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const GotApiMobile()));
+                      builder: (context) => const ListGotApiMobile()));
                 },
               )),
           Padding(
