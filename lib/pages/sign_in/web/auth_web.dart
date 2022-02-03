@@ -1,12 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projet_flutter/pages/got_api/mobile/list_got_api_mobile.dart';
 import 'package:projet_flutter/pages/got_api/web/list_got_api_web.dart';
 import 'package:projet_flutter/data/providers/remote/authentication_firebase.dart';
-import 'package:projet_flutter/pages/sign_in/test_widget.dart';
 
 class AuthWeb extends StatelessWidget {
   const AuthWeb({Key? key}) : super(key: key);

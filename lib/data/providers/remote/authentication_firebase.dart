@@ -31,7 +31,12 @@ class AuthenticationHelper {
   }
 
   Future<String?> recoverPassword(String name) async {
-    return "password recovering";
+    try {
+      await _auth.sendPasswordResetEmail(email: name);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
   }
 
   String getUid() {
